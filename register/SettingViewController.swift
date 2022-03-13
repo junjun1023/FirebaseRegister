@@ -11,25 +11,23 @@ class SettingViewController: UIViewController, UITextFieldDelegate {
     
     let padding: CGFloat = 16
     
-    let pwdTextField: UITextField = {
-        let textField = UITextField()
+    let pwdTextField: TextField = {
+        let textField = TextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "new password"
         textField.layer.borderWidth = 2.0
         textField.layer.borderColor = UIColor.black.cgColor
-        textField.layoutMargins.left = 5
-        textField.layoutMargins.right = 5
+        textField.returnKeyType = .done
         return textField
     }()
     
-    let againTextField: UITextField = {
-        let textField = UITextField()
+    let againTextField: TextField = {
+        let textField = TextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "type again"
         textField.layer.borderWidth = 2.0
         textField.layer.borderColor = UIColor.black.cgColor
-        textField.layoutMargins.left = 5
-        textField.layoutMargins.right = 5
+        textField.returnKeyType = .done
         return textField
     }()
     
@@ -42,23 +40,21 @@ class SettingViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
 
+    let cancelButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setTitle("CANCEL", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         initView()
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -95,6 +91,13 @@ extension SettingViewController {
         self.submitButton.topAnchor.constraint(equalTo: againTextField.bottomAnchor, constant: padding).isActive = true
         self.submitButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         self.submitButton.addTarget(self, action: #selector(submitBtnPressed), for: .touchUpInside)
+        
+        view.addSubview(self.cancelButton)
+        self.cancelButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
+        self.cancelButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding).isActive = true
+        self.cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
+        self.cancelButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        self.cancelButton.addTarget(self, action: #selector(cancelBtnPressed), for: .touchUpInside)
 
     }
     
@@ -104,6 +107,12 @@ extension SettingViewController {
 
 
 extension SettingViewController {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     @objc func submitBtnPressed(sender: UIButton!) {
         
         
@@ -121,7 +130,7 @@ extension SettingViewController {
 
         
         guard again.elementsEqual(pwd) else {
-            let alert = UIAlertController(title: "Unvalid Password", message: "Different password", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Invalid Password", message: "Different password", preferredStyle: UIAlertController.Style.alert)
 
             // add an action (button)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -131,8 +140,19 @@ extension SettingViewController {
 
             return
         }
-
+        
+        Defaults.savePassword(password: pwd)
+        
+        let username = Defaults.getUsername()
+        DataService.dataService.USER.child(username).updateChildValues(["password": pwd])
+        
         self.navigationController?.popToRootViewController(animated: true)
+        
+    }
+    
+    
+    @objc func cancelBtnPressed(sender: UIButton!) {
+        self.navigationController?.popViewController(animated: true)
         
     }
 }

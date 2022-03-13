@@ -18,6 +18,7 @@ class MemberViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         return button
     }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ extension MemberViewController {
     func initView() {
         
         view.backgroundColor = .white
-        self.navigationItem.title = "Hello, xxx"
+        self.navigationItem.title = "Hello, \(Defaults.getUsername())"
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.barTintColor = .black
