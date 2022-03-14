@@ -8,9 +8,9 @@
 import Foundation
 
 class Defaults {
-    static private(set) var username = "jane"
-    static private(set) var email = "jane@example.com"
-    static private(set) var password = "12345678"
+    static let username = "init"
+    static let email = "init@example.com"
+    static let password = "init"
     
     static func saveUsername(username: String){
         UserDefaults.standard.set(username, forKey: "Username")
@@ -49,5 +49,14 @@ class Defaults {
             saveEmail(email: self.email)
             return email
         }
+    }
+    
+    static func getUserInfo() -> User {
+        let username = self.getUsername()
+        let user = User(username: username)
+        user.email = self.getEmail()
+        user.password = self.getPassword()
+        
+        return user
     }
 }
