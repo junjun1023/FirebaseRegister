@@ -40,6 +40,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         return button
     }()
 
+    let registerButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setTitle("register", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .black
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,25 +59,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     func autoLogin() {
-        if let id = emailTextField.text, !id.isEmpty, let pwd = pwdTextField.text, !pwd.isEmpty {
-            let username = Defaults.getUsername()
-            DataService.dataService.USER.child(username).observeSingleEvent(of: .value, with: {(snapshot) in
 
-                if snapshot.exists() {
-                    
-                    let emailSp = snapshot.childSnapshot(forPath: "email").value as! String
-                    let pwdSp = snapshot.childSnapshot(forPath: "password").value as! String
-                    
-                    if id.elementsEqual(emailSp), pwd.elementsEqual(pwdSp) {
-                        self.successLogin()
-                    }
-                    
-                } else {
-                    print("not")
-                }
-                
-            })
-        }
+        let user = Defaults.getUserInfo()
+        print(user.username, user.email, user.password)
+        DataService.dataService.checkUserValid(user: user, completion: { flag in
+            print("user \(flag)")
+            if flag == FLAG.userValid {
+                self.successLogin()
+            }
+            
+        })
+        
 
     }
     
@@ -107,6 +107,7 @@ extension ViewController {
         self.pwdTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         pwdTextField.delegate = self
         pwdTextField.text = Defaults.getPassword()
+
         
         view.addSubview(self.loginButton)
         self.loginButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
@@ -115,6 +116,12 @@ extension ViewController {
         self.loginButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         self.loginButton.addTarget(self, action: #selector(loginBtnPressed), for: .touchUpInside)
 
+        view.addSubview(self.registerButton)
+        self.registerButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
+        self.registerButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding).isActive = true
+        self.registerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
+        self.registerButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        self.registerButton.addTarget(self, action: #selector(registerBtnPressed), for: .touchUpInside)
     }
 }
 
@@ -141,35 +148,31 @@ extension ViewController {
         }
 
         
-        let username = Defaults.getUsername()
-        DataService.dataService.USER.child(username).observeSingleEvent(of: .value, with: {(snapshot) in
-
-            if snapshot.exists() {
-                
-                let emailSp = snapshot.childSnapshot(forPath: "email").value as! String
-                let pwdSp = snapshot.childSnapshot(forPath: "password").value as! String
-                
-                if id.elementsEqual(emailSp), pwd.elementsEqual(pwdSp) {
-                    Defaults.saveEmail(email: emailSp)
-                    Defaults.savePassword(password: pwdSp)
-                    self.successLogin()
-                    
-                } else {
-                    let alert = UIAlertController(title: "Invalid Email/Password", message: "Please correct the email/password", preferredStyle: UIAlertController.Style.alert)
-
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-
-                    // show the alert
-                    self.present(alert, animated: true, completion: nil)
-                }
-                
+        Defaults.saveEmail(email: id)
+        Defaults.savePassword(password: pwd)
+        
+        let user = Defaults.getUserInfo()
+        
+        DataService.dataService.checkUserValid(user: user, completion: { flag in
+            print("user \(flag)")
+            if flag == FLAG.userValid {
+                self.successLogin()
             } else {
-                print("not")
+                let alert = UIAlertController(title: "Invalid Email/Password", message: "Please correct the email/password", preferredStyle: UIAlertController.Style.alert)
+
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
             }
             
         })
 
 
+    }
+    
+    @objc func registerBtnPressed(sender: UIButton) {
+        self.present(RegisterViewController(), animated: true, completion: nil)
     }
 }
