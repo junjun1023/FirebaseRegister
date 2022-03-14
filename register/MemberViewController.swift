@@ -19,6 +19,13 @@ class MemberViewController: UIViewController {
         return button
     }()
 
+    let logoutButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setTitle("log out", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +66,14 @@ extension MemberViewController {
         self.pwdButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding).isActive = true
         self.pwdButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
         self.pwdButton.addTarget(self, action: #selector(pwdBtnPressed), for: .touchUpInside)
+        
+        
+        view.addSubview(self.logoutButton)
+        self.logoutButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
+        self.logoutButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding).isActive = true
+        self.logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding).isActive = true
+        self.logoutButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        self.logoutButton.addTarget(self, action: #selector(logoutBtnPressed), for: .touchUpInside)
 
     }
     
@@ -66,6 +81,11 @@ extension MemberViewController {
 }
 
 extension MemberViewController {
+    
+    @objc func logoutBtnPressed(sender: UIButton!) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     @objc func pwdBtnPressed(sender: UIButton!) {
         self.navigationController?.pushViewController(SettingViewController(), animated: true)
     }
