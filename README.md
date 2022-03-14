@@ -4,7 +4,8 @@
 <img width="296" alt="member_view" src="https://user-images.githubusercontent.com/44397290/158119011-d8372b9c-2a78-4e71-966e-d0e69a925726.png">
 
 - Loging View
-<img width="298" alt="loging_view" src="https://user-images.githubusercontent.com/44397290/158119016-b47f2552-8ee6-420f-92eb-097102bf3c2b.png">
+<img width="298" alt="loging_view" src="https://user-images.githubusercontent.com/44397290/158119016-b47f2552-8ee6-420f-92eb-097102bf3c2b.png">ema
+1. For login, user need to type **email** and **password**
 
 - Register View
 <img width="298" alt="register_view" src="https://user-images.githubusercontent.com/44397290/158119019-7f00d8f4-e5c0-4f06-9a56-e2ce7b7ce32a.png">
