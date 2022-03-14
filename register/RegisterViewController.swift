@@ -38,6 +38,18 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderWidth = 2.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.returnKeyType = .done
+        textField.isSecureTextEntry = true
+        return textField
+    }()
+    
+    let againTextField: TextField = {
+        let textField = TextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "password again"
+        textField.layer.borderWidth = 2.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.returnKeyType = .done
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -65,16 +77,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         initView()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -116,7 +118,13 @@ extension RegisterViewController {
         self.pwdTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         pwdTextField.delegate = self
 //        pwdTextField.text = Defaults.password
-
+        
+        view.addSubview(self.againTextField)
+        self.againTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
+        self.againTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -padding).isActive = true
+        self.againTextField.topAnchor.constraint(equalTo: pwdTextField.bottomAnchor, constant: padding).isActive = true
+        self.againTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        againTextField.delegate = self
 
         view.addSubview(self.registerButton)
         self.registerButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
@@ -140,7 +148,8 @@ extension RegisterViewController {
 extension RegisterViewController {
     @objc func registerBtnPressed(sender: UIButton) {
         
-        guard let username = usernameTextField.text, !username.isEmpty, let email = emailTextField.text, !email.isEmpty, let pwd = pwdTextField.text, !pwd.isEmpty else {
+        guard let username = usernameTextField.text, !username.isEmpty, let email = emailTextField.text, !email.isEmpty, let pwd = pwdTextField.text, !pwd.isEmpty,
+              let again = againTextField.text, !again.isEmpty else {
             let alert = UIAlertController(title: "Empty Username/Email/Password", message: "Please fill in username/email/password.", preferredStyle: UIAlertController.Style.alert)
 
             // add an action (button)
@@ -151,7 +160,18 @@ extension RegisterViewController {
 
             return
         }
-        
+ 
+        guard again.elementsEqual(pwd) else {
+            let alert = UIAlertController(title: "Invalid Password", message: "Different password", preferredStyle: UIAlertController.Style.alert)
+
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
+
+            return
+        }
         
         Defaults.saveUsername(username: username)
         Defaults.saveEmail(email: email)

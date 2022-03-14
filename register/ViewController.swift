@@ -28,6 +28,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.layer.borderWidth = 2.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.returnKeyType = .done
+        textField.isSecureTextEntry = true
         return textField
     }()
     
