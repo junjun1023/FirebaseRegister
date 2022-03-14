@@ -9,13 +9,13 @@ import Foundation
 
 class User {
     let username : String
-    private var _email : String = "default"
-    private var _password : String = "default"
+    private var _email : String = "init@example.com"
+    private var _password : String = "init"
 
     init(username : String) {
         self.username =  username
     }
-    var email: String{
+    var email: String {
         set{
             _email = newValue
         }
@@ -23,7 +23,7 @@ class User {
             return _email
         }
     }
-    var password: String{
+    var password: String {
         set{
             _password = newValue
         }
