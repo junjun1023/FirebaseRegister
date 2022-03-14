@@ -24,7 +24,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     let emailTextField: TextField = {
         let textField = TextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "account"
+        textField.placeholder = "email"
         textField.layer.borderWidth = 2.0
         textField.layer.borderColor = UIColor.black.cgColor
         textField.returnKeyType = .done
@@ -99,7 +99,7 @@ extension RegisterViewController {
         self.usernameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding).isActive = true
         self.usernameTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         usernameTextField.delegate = self
-        usernameTextField.text = Defaults.username
+//        usernameTextField.text = Defaults.username
         
         view.addSubview(self.emailTextField)
         self.emailTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
@@ -107,7 +107,7 @@ extension RegisterViewController {
         self.emailTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: padding).isActive = true
         self.emailTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         emailTextField.delegate = self
-        emailTextField.text = Defaults.email
+//        emailTextField.text = Defaults.email
 
         view.addSubview(self.pwdTextField)
         self.pwdTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: padding).isActive = true
@@ -115,7 +115,7 @@ extension RegisterViewController {
         self.pwdTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: padding).isActive = true
         self.pwdTextField.heightAnchor.constraint(equalToConstant: 48).isActive = true
         pwdTextField.delegate = self
-        pwdTextField.text = Defaults.password
+//        pwdTextField.text = Defaults.password
 
 
         view.addSubview(self.registerButton)
