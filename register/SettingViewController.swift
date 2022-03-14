@@ -143,10 +143,26 @@ extension SettingViewController {
         
         Defaults.savePassword(password: pwd)
         
-        let username = Defaults.getUsername()
-        DataService.dataService.USER.child(username).updateChildValues(["password": pwd])
+        let user = Defaults.getUserInfo()
         
-        self.navigationController?.popToRootViewController(animated: true)
+        DataService.dataService.updateUserInfo(user: user, completion: { flag in
+            if flag == .userUpdateSuccess {
+                self.navigationController?.popToRootViewController(animated: true)
+            } else {
+                let alert = UIAlertController(title: "Oops", message: "Something are going wrong", preferredStyle: UIAlertController.Style.alert)
+
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+
+                return
+            }
+        })
+        
+
+        
         
     }
     
