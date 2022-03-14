@@ -26,6 +26,7 @@
 		3FA50FE827DE42440028C245 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3FA50FE727DE42440028C245 /* FirebaseDatabase */; };
 		3FA50FED27DE484F0028C245 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA50FEC27DE484F0028C245 /* Defaults.swift */; };
 		3FA50FF227DE66080028C245 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA50FF127DE66070028C245 /* TextField.swift */; };
+		3FA50FF727DEB9620028C245 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA50FF627DEB9620028C245 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		3FA50FD827DE3C300028C245 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3FA50FEC27DE484F0028C245 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		3FA50FF127DE66070028C245 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		3FA50FF627DEB9620028C245 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				3FA50F5327DA40800028C245 /* AppDelegate.swift */,
 				3FA50F5527DA40800028C245 /* SceneDelegate.swift */,
 				3FA50F5727DA40800028C245 /* ViewController.swift */,
+				3FA50FF627DEB9620028C245 /* RegisterViewController.swift */,
 				3FA50FF127DE66070028C245 /* TextField.swift */,
 				3FA50FB327DE18560028C245 /* MemberViewController.swift */,
 				3FA50FBD27DE1BED0028C245 /* SettingViewController.swift */,
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA50F5827DA40800028C245 /* ViewController.swift in Sources */,
+				3FA50FF727DEB9620028C245 /* RegisterViewController.swift in Sources */,
 				3FA50FED27DE484F0028C245 /* Defaults.swift in Sources */,
 				3FA50F5427DA40800028C245 /* AppDelegate.swift in Sources */,
 				3FA50F5627DA40800028C245 /* SceneDelegate.swift in Sources */,
